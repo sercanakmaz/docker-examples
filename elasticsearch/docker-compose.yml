@@ -1,0 +1,204 @@
+version: '2.2'
+services:
+  elasticsearch1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: elasticsearch1
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "node.name=elasticsearch1"
+      - "node.data=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: elasticsearch2
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1"
+      - "node.name=elasticsearch2"
+      - "node.data=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch1
+  elasticsearch3:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: elasticsearch3
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1,elasticsearch2"
+      - "node.name=elasticsearch3"
+      - "node.master=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata3:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+  elasticsearch4:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: elasticsearch4
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1,elasticsearch2"
+      - "node.name=elasticsearch4"
+      - "node.master=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata4:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+  elasticsearch5:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: elasticsearch5
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1,elasticsearch2"
+      - "node.name=elasticsearch5"
+      - "node.master=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata5:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+  elasticsearch6:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: elasticsearch6
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1,elasticsearch2"
+      - "node.name=elasticsearch6"
+      - "node.master=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata6:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+  elasticsearch7:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: elasticsearch7
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1,elasticsearch2"
+      - "node.name=elasticsearch7"
+      - "node.master=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata7:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+  elasticsearch8:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.1
+    container_name: elasticsearch8
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1,elasticsearch2"
+      - "node.name=elasticsearch8"
+      - "node.master=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata8:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+  kibana:
+      image: docker.elastic.co/kibana/kibana:6.6.1
+      container_name: kibana
+      ports:
+        - 5601:5601
+      environment:
+        - "ELASTICSEARCH_URL=http://elasticsearch1:9200"
+      networks:
+        - esnet
+      depends_on:
+        - elasticsearch1
+        - elasticsearch2
+        - elasticsearch3
+        - elasticsearch4
+        - elasticsearch5
+        - elasticsearch6
+
+volumes:
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local
+  esdata3:
+    driver: local
+  esdata4:
+    driver: local
+  esdata5:
+    driver: local
+  esdata6:
+    driver: local
+  esdata7:
+    driver: local
+  esdata8:
+    driver: local
+
+networks:
+  esnet:
