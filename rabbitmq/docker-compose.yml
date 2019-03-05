@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+    rabbitmq:
+        image: rabbitmq:management
+        container_name: rabbitmq-01
+        ports:
+          - 5672:5672
+          - 15672:15672
+        environment:
+          - RABBITMQ_DEFAULT_USER=omscode
+          - RABBITMQ_DEFAULT_PASS=oms123
+          - RABBITMQ_ERLANG_COOKIE='bjk1903'
