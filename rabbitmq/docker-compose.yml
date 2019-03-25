@@ -2,7 +2,7 @@ version: '2'
 
 services:
     rabbitmq:
-        image: rabbitmq:management
+        image: local/rabbitmq
         container_name: rabbitmq-01
         ports:
           - 5672:5672

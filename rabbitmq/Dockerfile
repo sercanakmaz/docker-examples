@@ -1,0 +1,4 @@
+FROM rabbitmq:3.7.8-management
+RUN rabbitmq-plugins enable --offline rabbitmq_management rabbitmq_federation rabbitmq_federation_management rabbitmq_shovel rabbitmq_shovel_management
+
+# docker build -t local/rabbitmq .
